@@ -50,7 +50,6 @@
 #include "../platsmp.h"
 #include <mach/board_lge.h>
 
-
 static struct memtype_reserve msm8974_reserve_table[] __initdata = {
 	[MEMTYPE_SMI] = {
 	},
@@ -137,12 +136,15 @@ void __init msm8974_add_drivers(void)
 #ifdef CONFIG_LGE_DIAG_USB_ACCESS_LOCK
 	lge_add_diag_devices();
 #endif
-#if defined(CONFIG_LCD_KCAL)
-	lge_add_lcd_kcal_devices();
-#endif
 #ifdef CONFIG_USB_G_LGE_ANDROID
 	lge_add_android_usb_devices();
 #endif
+
+/*                                                                    */
+#if defined(CONFIG_BCMDHD) || defined(CONFIG_BCMDHD_MODULE)
+	init_bcm_wifi();
+#endif
+/*                                                                    */
 }
 
 static struct of_dev_auxdata msm_hsic_host_adata[] = {

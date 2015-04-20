@@ -95,8 +95,6 @@
 // LGE_CHANGE_S, [LGE_DATA][LGP_DATA_TCPIP_SLAAC_IPV6_ALLOCATION_BOOSTER], heeyeon.nah@lge.com, 2013-05-21
 //#define ACONF_DEBUG 2 // The original value.
 #define ACONF_DEBUG 2 // To debug...
-//                                                                                                        
-
 #if ACONF_DEBUG >= 3
 #define ADBG(x) printk x
 #else

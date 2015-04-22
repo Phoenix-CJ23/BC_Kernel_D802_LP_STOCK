@@ -167,11 +167,6 @@ void __init msm8974_add_drivers(void)
 #ifdef CONFIG_MACH_MSM8974_G2_VZW
 	lge_add_android_usb_devices();
 #endif
-/*                                                                    */
-#if defined(CONFIG_BCMDHD) || defined(CONFIG_BCMDHD_MODULE)
-	init_bcm_wifi();
-#endif
-/*                                                                    */
 }
 
 static struct of_dev_auxdata msm_hsic_host_adata[] = {

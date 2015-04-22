@@ -50,10 +50,6 @@
 #include "../platsmp.h"
 #include <mach/board_lge.h>
 
-#ifdef CONFIG_MACH_MSM8974_G2_VZW
-#include <linux/platform_data/lge_android_usb.h>
-#endif
-
 static struct memtype_reserve msm8974_reserve_table[] __initdata = {
 	[MEMTYPE_SMI] = {
 	},
@@ -104,27 +100,6 @@ void __init lge_add_lcd_misc_devices(void)
 }
 #endif
 
-#ifdef CONFIG_MACH_MSM8974_G2_VZW
-struct lge_android_usb_platform_data lge_android_usb_pdata = {
-	.vendor_id = 0x1004,
-	.factory_pid = 0x6000,
-	.iSerialNumber = 0,
-	.product_name = "LGE Android Phone",
-	.manufacturer_name = "LG Electronics Inc.",
-	.factory_composition = "acm,diag",
-};
-struct platform_device lge_android_usb_device = {
-	.name = "lge_android_usb",
-	.id = -1,
-	.dev = {
-		.platform_data = &lge_android_usb_pdata,
-	},
-};
-void __init lge_add_android_usb_devices(void)
-{
-	platform_device_register(&lge_android_usb_device);
-}
-#endif /* CONFIG_MACH_MSM8974_G2_VZW */
 /*
  * Used to satisfy dependencies for devices that need to be
  * run early or in a particular order. Most likely your device doesn't fall
@@ -161,17 +136,12 @@ void __init msm8974_add_drivers(void)
 #ifdef CONFIG_LGE_DIAG_USB_ACCESS_LOCK
 	lge_add_diag_devices();
 #endif
+#if defined(CONFIG_LCD_KCAL)
+	lge_add_lcd_kcal_devices();
+#endif
 #ifdef CONFIG_USB_G_LGE_ANDROID
 	lge_add_android_usb_devices();
 #endif
-#ifdef CONFIG_MACH_MSM8974_G2_VZW
-	lge_add_android_usb_devices();
-#endif
-/*                                                                    */
-#if defined(CONFIG_BCMDHD) || defined(CONFIG_BCMDHD_MODULE)
-	init_bcm_wifi();
-#endif
-/*                                                                    */
 }
 
 static struct of_dev_auxdata msm_hsic_host_adata[] = {
